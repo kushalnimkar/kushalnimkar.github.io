@@ -1,0 +1,115 @@
+/* --- General Styles --- */
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #343a40;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+h1, h2 {
+    font-family: 'Merriweather', serif;
+    color: #212529;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+    margin-top: 40px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 0;
+    border-bottom: none;
+}
+
+header p {
+    text-align: center;
+    font-size: 1.1em;
+    color: #6c757d;
+}
+
+/* --- About Me Section --- */
+.about-me {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.about-me img.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #dee2e6;
+}
+
+.about-me .blurb {
+    flex: 1;
+}
+
+/* --- Research Section --- */
+.research-gallery {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.research-gallery img {
+    width: calc(50% - 10px); /* Two images per row */
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 4px;
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
+/* --- Publications Section --- */
+.publications-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.publications-list li {
+    margin-bottom: 15px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.publications-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+    font-size: 1.2em;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 600px) {
+    .about-me {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .research-gallery img {
+        width: 100%; /* Full width on small screens */
+    }
+}
