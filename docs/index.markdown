@@ -7,7 +7,7 @@ layout: default
 ## About Me
 
 <div class="about-me">
-  <img src="{{ '/assets/images/placeholder-profile.png' | relative_url }}" alt="My Profile Picture" class="profile-pic">
+  <img src="{{ '/assets/images/placeholder-profile.png'}}" alt="My Profile Picture" class="profile-pic">
   <div class="blurb">
     <p>
       I am 5th year Chemical Engineering PhD student at UC Berkeley. I am a computational researcher who analyzes a lot of single-cell genomic data. In my free time, I enjoy playing the piano, exercising, and cooking.
@@ -21,7 +21,7 @@ layout: default
 I study neurodegeneration and connectivity in the visual system via analysis of spatial transcriptomics data. My work is done in close collaboration with wet-lab scientists at UCSF and Harvard.
 
 <div class="research-gallery">
-  <img src="{{ '/assets/images/research-1.png' | relative_url }}" alt="Description of first research image">
+  <img src="{{ '/assets/images/research-1.png'}}" alt="Description of first research image">
   Figure: Preferential survival of retinal ganglion cells near blood vessels in a secondary glaucoma model (ND SOHU). RBMS stains retinal ganglion cells while CD31 stains blood vessels.
 </div>
 
