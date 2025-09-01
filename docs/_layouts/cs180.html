@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<script type="text/javascript" async 
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?
+    config=TeX-AMS-MML_HTMLorMML"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css'}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <main>
+            {{ content }}
+        </main>
+        <footer>
+            <p>&copy; {{ "now" | date: "%Y" }} {{ site.author }}. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
