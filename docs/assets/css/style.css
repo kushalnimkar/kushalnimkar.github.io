@@ -113,3 +113,27 @@ footer {
         width: 100%; /* Full width on small screens */
     }
 }
+
+.side-by-side {
+    display: flex;         /* Activates Flexbox layout */
+    flex-wrap: wrap;       /* Allows items to wrap to the next line on small screens */
+    justify-content: center; /* Horizontally centers the images */
+    align-items: center;   /* Vertically aligns the images */
+    gap: 15px;             /* Creates space between the images */
+    margin: 2em 0;         /* Adds vertical space around the figure */
+  }
+  
+  .side-by-side img {
+    flex: 1 1 250px;       /* Allows images to grow and shrink, with a base width of 250px */
+    max-width: 48%;        /* Prevents a single image from becoming too large */
+    object-fit: cover;     /* Ensures images have a consistent size if needed */
+    height: auto;          /* Maintains the image's aspect ratio */
+  }
+  
+  .side-by-side figcaption {
+    flex-basis: 100%;      /* Makes the caption take the full width, forcing it to a new line */
+    text-align: center;    /* Centers the caption text */
+    margin-top: 10px;      /* Adds some space above the caption */
+    color: #555;
+    font-style: italic;
+  }
