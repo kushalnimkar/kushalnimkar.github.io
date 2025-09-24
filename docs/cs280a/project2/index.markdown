@@ -1,7 +1,7 @@
 ---
 layout: cs180
 ---
-# Project 2
+# CS280A Project 2, Kushal Nimkar
 ## 1.1
 {% include mathjax.html %}
 
