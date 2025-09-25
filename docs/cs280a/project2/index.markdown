@@ -41,15 +41,26 @@ I convolved the filters with the cameraman image, calculated the magnitude of th
 ## 1.3
 Here I define $\circledast$ to be the convolution operator, $G$ to be a gaussian blur filter with $k=7, \sigma = 3$, $f $ to be the original image, and $df $ to be either the dx or dy filters (this is a bit of abuse of notation...) which you can take the magnitude of to get gradients. 
 
-In theory, the convolution operator is commutative so the order of filters does not matter. In practice the images are very slightly different because I used the mode="same" scipy.signal.convolve2d operator which doesn't perfectly preserve this property.
+In theory, the convolution operator is commutative so the order of filters does not matter. In practice the images are very slightly different because I end up using the mode="same" scipy.signal.convolve2d operator for the final images which doesn't perfectly preserve this property.
 
-Note that the edge detection looks much better than the finite difference method since the blur helps remove the noise that causes the gradient intensity to get too whacky at a local scale.
+I first show the filters.
+
+<div class="image-row2">
+  <figure>
+    <img src="/assets/images/project2/1.3_filts.png" alt="1.3_filt">
+    <figcaption>Figure: Gaussian blur filter, and what it looks like when convolved with the Dx and Dy filters (mode='full')</figcaption>
+  </figure>
+</div>
+
+Then show the results
 <div class="image-row2">
   <figure>
     <img src="/assets/images/project2/1.3_convolution_order.png" alt="1.3_convo">
     <figcaption>Figure: Comparing results from flipping the order of the filters. </figcaption>
   </figure>
 </div>
+
+Note that the edge detection looks much better than the finite difference method since the blur helps remove the noise that causes the gradient intensity to get too whacky at a local scale.
 
 ## 1.3 Bells and Whistles
 I used np.arctan2 to convert the images filtered with dy and dx to an image with pixels representing gradient vector angles $[-\pi,\pi]$. I converted to $[0,2\pi]$ and created a HSV image format where $H=\theta$, $S = 1$, and $V= |\nabla f|$. I then created a cyclic colorwheel with 0 and 2 pi as the end points (very annoying) and added it as a colorbar. Note that for $\theta$ because "up" is technically in the negative direction, I flipped the y coordinate sign when inputting it to arctan2 to make sure "up" is $\pi/2$. 
