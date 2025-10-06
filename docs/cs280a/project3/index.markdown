@@ -131,7 +131,7 @@ I tested my warping and inverse mapping on two sample rectifications, where I de
     <img src="/assets/images/project3/A2_correspondences_r_cropped.png" alt="monitor_rect_bilinear">
     <img src="/assets/images/project3/A3_rectification_r_NN.png" alt="monitor_rect_bilinear">
     <img src="/assets/images/project3/A3_rectification_r_bilinear.png" alt="monitor_rect_bilinear">
-    <figcaption>Figure: Monitor rectification. Top: Original image with keypoints in red. Middle: Warping and using nearest-neighbor interpolation for color. Bottom: Warping and using nearest-neighbor bilinear interpolation for color </figcaption>
+    <figcaption>Figure: Monitor rectification. Top: Original image with keypoints in red. Middle: Warping and using nearest-neighbor interpolation for color. Bottom: Warping and using bilinear interpolation for color </figcaption>
   </figure>
 </div>
 Another example is shown below
@@ -140,7 +140,7 @@ Another example is shown below
     <img src="/assets/images/project3/A2_correspondences_s_cropped.png" alt="floor_rect_bilinear">
     <img src="/assets/images/project3/A3_rectification_s_NN.png" alt="floor_rect_bilinear">
     <img src="/assets/images/project3/A3_rectification_s_bilinear.png" alt="floor_rect_bilinear">
-    <figcaption>Figure: Floor tile rectification. Top: Original image with keypoints in red. Middle: Warping and using nearest-neighbor interpolation for color. Bottom: Warping and using nearest-neighbor bilinear interpolation for color </figcaption>
+    <figcaption>Figure: Floor tile rectification. Top: Original image with keypoints in red. Middle: Warping and using nearest-neighbor interpolation for color. Bottom: Warping and using bilinear interpolation for color </figcaption>
   </figure>
 </div>
 It doesn't really seem like there is a whole visible difference between NN and bilinear interpolation, probably because my images are kind of bland to begin with here. However, bilinear interpolation should generally be more pleasing (since it does a better smoothing so to speak). I will note that bilinear interpolation takes longer to run (e.g. 0.6 s for NN, 0.9s for bilinear) which makes sense since it requires more queries to the original image.
