@@ -165,7 +165,7 @@ where $\cdot$ is elementwise multiplication. This is visualized below
     <img src="/assets/images/project3/A4_distances_i_1.png" alt="floor_rect_bilinear">
     <img src="/assets/images/project3/A4_distances_i_2.png" alt="floor_rect_bilinear">
     <img src="/assets/images/project3/A4_post_blend_i.png" alt="floor_rect_bilinear">
-    <figcaption>Figure: Visualizing the weighted alphas. Row 1: Distance map from $alpha=0$ for image 1. Row 2: Distancemap from $\alpha =0$ for image 2. Final blended image using these weighted distance maps (with normalization).</figcaption>
+    <figcaption>Figure: Visualizing the weighted alphas. Row 1: Distance map from $\alpha=0$ for image 1. Row 2: Distance map from $\alpha =0$ for image 2. Final blended image using these weighted distance maps (with normalization).</figcaption>
   </figure>
 </div>
 
