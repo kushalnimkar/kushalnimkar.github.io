@@ -1,4 +1,8 @@
 /* --- General Styles --- */
+.medium-font-list li {
+  font-size: 1em;
+}
+
 body {
     font-family: 'Lato', sans-serif;
     line-height: 1.6;
@@ -334,3 +338,29 @@ footer {
     flex-basis: 100%; /* Each figure takes up the full width */
   }
 }
+
+.single-image-centered {
+  display: block;      /* Ensures it behaves as a block element */
+  margin: 20px auto;   /* "auto" on left/right centers the block */
+  max-width: 400px;    /* Restricts width so it doesn't get too big */
+  width: 100%;         /* Allows it to shrink on mobile screens */
+  text-align: center;  /* Centers the caption text */
+}
+
+/* Image Style */
+.single-image-centered img {
+  width: 100%;         /* Fills the container */
+  height: auto;        /* Maintains aspect ratio */
+  border-radius: 5px;  /* Keeps your rounded corners */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Keeps your shadow */
+}
+
+/* Caption Style */
+.single-image-centered figcaption {
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #555;
+  font-family: sans-serif; /* Optional: Ensures clean text */
+}
+How to use it in HTML
+You would apply the class to the <figure> element:
