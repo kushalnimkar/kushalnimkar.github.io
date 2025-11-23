@@ -37,3 +37,15 @@ retinal flatmounts identifies perivascular neurons resilient to glaucoma" <em>Ne
   </li>
   * denotes equal contribution
 </ul>
+
+## Additional learnings
+On the side, I enjoy learning topics adjacent to statistics and machine learning. Below are a list of additional classes I took in these topics at Berkeley:
+
+* **EECS 227AT**: Convex Optimization and Applications
+* **EE 226A**: Random Processes in Systems
+* **CS 289A**: Introduction to Machine Learning
+* **CS 285**: Deep Reinforcement Learning and Control
+* **CS 288**: Natural Language Processing
+* **Stat 210A**: Theoretical Statistics I
+* **Stat 210B**: Theoretical Statistics II
+{: .medium-font-list}
