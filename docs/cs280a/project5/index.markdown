@@ -322,7 +322,7 @@ We implement inpainting a select ROI by reusing our code previously with slight 
 
 <div class="image-row3a">
   <figure>
-    <img src="/assets/images/project5/5a/1_7_2_inpaint_code.png" alt="0">
+    <img src="/assets/images/project5/5a/1_7_3_inpaint.png" alt="0">
     <figcaption>Figure: Important code for inpaint. The last line is the key step in masking</figcaption>
   </figure>
 </div>
@@ -338,7 +338,7 @@ Campanile:
 <div class="single-image-centered">
   <figure>
     <img src="/assets/images/project5/5a/1_7_3_inpaint_campanile.png" alt="0">
-    <figcaption>Figure: Replacing the top of the campanile with something more modern via inpainting the above</figcaption>
+    <figcaption>Figure: Replacing the top of the campanile with something a bit different via inpainting the above</figcaption>
   </figure>
 </div>
 
@@ -366,8 +366,8 @@ Puppy:
 
 <div class="single-image-centered">
   <figure>
-    <img src="/assets/images/project5/5a/1_7_3_puppy_v9.png" alt="0">
-    <figcaption>Figure: Replacing the face of a puppy with a fierce dog/vampire via inpainting the above</figcaption>
+    <img src="/assets/images/project5/5a/1_7_3_puppy.png" alt="0">
+    <figcaption>Figure: Replacing the face of a puppy with a more hound-like snout/mouth via inpainting the above</figcaption>
   </figure>
 </div>
 
