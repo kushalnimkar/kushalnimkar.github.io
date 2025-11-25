@@ -251,7 +251,7 @@ Stanley Hall:
 <div class="image-row3a">
   <figure>
     <img src="/assets/images/project5/5a/downsample_stanley_outside.jpg" alt="0">
-    <figcaption>Figure: Original mountain</figcaption>
+    <figcaption>Figure: Original stanley</figcaption>
   </figure>
 </div>
 <div class="side-by-side">
