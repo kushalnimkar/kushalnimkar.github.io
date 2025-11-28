@@ -537,13 +537,267 @@ I tried a few prompts (e.g. 'a programmer in front of his computer celebrating t
 I end up choosing the image at level 7
 
 
-<div class="single-image-centered">
+# Part B
+## 1.1 Implementing the UNet
+First, we implement the U-net architecture as follows
+<div class="image-row2">
   <figure>
-    <img src="/assets/images/project5/5a/2_programmer_mad_v2_7_ucb_logo.jpg" alt="0">
-    <figcaption>Figure: Final CS280a logo. I have no idea why this image is created given the prompt ‘a programmer in front of his computer frustrated with a bug’, but it looks cute.</figcaption>
+    <img src="/assets/images/project5/5b/1.1_diagram1.png" alt="0">
   </figure>
 </div>
 
+<div class="image-row2">
+  <figure>
+    <img src="/assets/images/project5/5b/1.1_diagram2.png" alt="0">
+  </figure>
+</div>
+
+## 1.2 Using the UNet to train a denoiser
+
+We add noise according to $z = x+ \sigma\epsilon$ where $x$ is the original image, $\sigma$ is the noise level, and $\epsilon\sim N(0,I)$
+<div class="image-row2">
+  <figure>
+    <img src="/assets/images/project5/5b/1.2.png" alt="0">
+    <figcaption>Figure: Adding noise at various levels to two different digits</figcaption>
+  </figure>
+</div>
+
+## 1.2.1 Training
+Below are the used training parameters for my UNet. The seed was set to 0.\\
+**Parameters:**\\
+$\sigma$: 0.5\\
+batch size: 256\\
+n_epochs: 5\\
+hidden_dimension: 128\\
+Optimizer: Adam with learning rate 1e-4\\
+Criterion: Mean squared error loss between original and corrupted + denoised image
+
+Below is the training curve:
+<div class="image-row2">
+  <figure>
+    <img src="/assets/images/project5/5b/1.2.1_training_loss.png" alt="0">
+    <figcaption>Figure: Training loss of UNet denoiser</figcaption>
+  </figure>
+</div>
+
+Finally, we can show the denoiser results after n=1 and n=5 epochs.
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/1.2.1_example_n1.png" alt="0">
+    <figcaption>Figure: Sample denoised digits after 1 epoch</figcaption>
+  </figure>
+</div>
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/1.2.1_example_n5.png" alt="0">
+    <figcaption>Figure: Sample denoised digits after 5 epochs</figcaption>
+  </figure>
+</div>
+
+After n=5 epochs, things look quite clean! I actually spent a while realizing that I need to set "model.eval()" during inference because otherwise the batch_norm layer makes the final images uglier.
+
+## 1.2.2 Out-of-Distribution Testing
+
+Now we can test our denoiser by adding noise at various levels $\sigma = \[0,0.2,0.4,0.5,0.6,0.8,1.0\]$.
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/1.2.1.png" alt="0">
+    <figcaption>Figure: Sample denoised digits at varying noise levels $\sigma$. Notable, it does not as well on out of distribution $\sigma > 0.5$</figcaption>
+  </figure>
+</div>
+
+Clearly if too much noise is added e.g. $\sigma > 0.5$ the model cannot denoise. Likely because it was not trained on that high of a $\sigma$ and/or the image is too distorted at that point to denoise.
+
+## 1.2.3 Denoising Pure Noise
+
+Now we can attempt to train a model to denoise a pure gaussian noise image into a digit. We used the same architcture as before.
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/1.2.3_training_loss.png" alt="0">
+    <figcaption>Figure: Training curve for creating digits from random noise.</figcaption>
+  </figure>
+</div>
+We can generate 5 sample digits from the model after n=1 epochs and n=5 epochs of training.
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/1.2.3_examples.png" alt="0">
+    <figcaption>Figure: Samples drawn by denoising random noise. The first row is after n=1 epochs, and the second row is n=5 epochs (5 samples each).</figcaption>
+  </figure>
+</div>
+
+Why does it create these images? During training, we are denoising random noise to try and reconstruct digits using denoising. The criterion used is mean squared error. However, the neural network cannot do better than simply trying to create an average image of all the digits to try to optimize the mean squared loss over all the digits in MNIST dataset. It doesn't really change across epochs (just gets brighter/more focused, still an average).
+
+# Part 2: Training a Flow Matching Model  
+
+## 2.1 Adding Time Conditioning to UNet
+First, we implement the U-net architecture for a Flow Matching Model instead.
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.1_diagram1.png" alt="0">
+  </figure>
+</div>
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.1_diagram2.png" alt="0">
+  </figure>
+</div>
+
+## 2.2 Training the UNet
+To train the UNet, we implement the algorithm below
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.2_diagram1.png" alt="0">
+  </figure>
+</div>
+
+We use the following hyperparameters (defaults suggested):\\
+batch_size:64\\
+hidden_dimension: 64\\
+n_epochs: 10\\
+Optimizer: Exponential Learning Rate with learning_rate 1e-2 and decay scheduler $\gamma = 0.1^{(1.0/\text{num_epochs})}$
+
+The training curve looks like below:
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.2_redo_training_loss.png" alt="0">
+  </figure>
+</div>
+
+## 2.3 Sampling from the UNet
+Then, we can implement sampling from the flow model as below:
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.3_diagram1.png" alt="0">
+  </figure>
+</div>
+and visualize it after n=1, n=5, and n=10 epochs. I used $T=50$ timesteps during training and inference.
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.3_samples_redo_1.png" alt="0">
+  </figure>
+    <figcaption>Figure: Samples after n=1 epochs</figcaption>
+</div>
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.3_samples_redo_5.png" alt="0">
+  </figure>
+    <figcaption>Figure: Samples after n=5 epochs</figcaption>
+</div>
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.3_samples_redo_10.png" alt="0">
+  </figure>
+    <figcaption>Figure: Samples after n=10 epochs</figcaption>
+</div>
+
+It's legible, but not perfect! There are a good number of nonsensical digits.
+
+## 2.4 Adding Class-Conditioning to UNet
+
+To make the constructed digits look better, we add class-conditioning. Here, we simply added two new FCBlocks that incorporate the class information to modulate the unflatten output and the first upsample output.
+
+## 2.5 Training the UNet
+
+The training algorithm is shown below
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.5_diagram1.png" alt="0">
+  </figure>
+</div>
+To train the UNet, we one hot encode the class vector, and zero it out with probability $p_{uncond}=0.1$. We used the same hyperparameters as in the previous model except set $T=300$.
+
+Below is the training loss for the Class conditioned UNet. 
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.5_training_loss.png" alt="0">
+  </figure>
+</div>
+
+## 2.6 Sampling from the UNet
+
+We implemented the algorithm from below to sample from our class conditioned UNet, using classifier free guidance.
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.6_diagram1.png" alt="0">
+  </figure>
+</div>
+
+with $\gamma =5.0$ and $T=300$. Below are images from n=1,5, and 10 epochs
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.6_samples_1.png" alt="0">
+    <figcaption>Figure: Samples after n=1 epochs from the class conditional UNet</figcaption>
+  </figure>
+</div>
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.6_samples_5.png" alt="0">
+    <figcaption>Figure: Samples after n=5 epochs from the class conditional UNet</figcaption>
+  </figure>
+</div>
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.6_samples_10.png" alt="0">
+    <figcaption>Figure: Samples after n=10 epochs from the class conditional UNet</figcaption>
+  </figure>
+</div>
+
+It does much better than the original model that does not use class information!
+
+Now, we can also try to get rid of the learning rate scheduler. We do this simply by increasing the learning rate to 2e-3 and keeping all other parameters the same.
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.5_training_no_sched_loss.png" alt="0">
+    <figcaption>Figure: Training curve for class conditional generation with constant learning rate</figcaption>
+  </figure>
+</div>
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/2.6_samples_no_sched_10.png" alt="0">
+    <figcaption>Figure: Samples after n=10 epochs from the class conditional UNet with no learning rate scheduler</figcaption>
+  </figure>
+</div>
+
+The results are still good!
+
+## Part 3: Bells and Whistles
+
+Here, I made a better version of the unconditional digit generator. To do this, I increased n_epochs to 20 and changed the optimizer to warmup for 1 epoch and then used cosine annealing.
+
+batch_size:64\\
+hidden_dimension: 64\\
+n_epochs: 20\\
+Optimizer: Adam, learning_rate 1e-2, with 1 epoch warmup followed by Cosine annealing.
+Below is the training curve
+
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/3_training_loss.png" alt="0">
+    <figcaption>Figure: Training curvee for adjusted unconditional generation</figcaption>
+  </figure>
+</div>
+
+Below are samples after n=20 epochs.
 
 
+<div class="image-row3a">
+  <figure>
+    <img src="/assets/images/project5/5b/3_samples_20.png" alt="0">
+    <figcaption>Figure: Samples after n=20 epochs from the unconditional UNet after adjustments</figcaption>
+  </figure>
+</div>
+
+In my opinion, this is better than the previous images I generated (almost no weird/nonsensical digits). It also achieves a better training loss.
 
