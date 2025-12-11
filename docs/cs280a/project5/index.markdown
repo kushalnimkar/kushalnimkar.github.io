@@ -41,14 +41,7 @@ The image at $x_t$ is defined as adding noise to the original image $x_0$ by fol
 \begin{equation}
     x_t = \sqrt{\bar{\alpha_t}}x_0 + \sqrt{1-\bar{\alpha_t}}\epsilon
 \end{equation}
-where $\epsilon \sim N(0,1)$. This is implemented as below:
-
-<div class="image-row3a">
-  <figure>
-    <img src="/assets/images/project5/5a/1.1_forward.png" alt="0">
-    <figcaption>Figure: Forward noising implementation in Python</figcaption>
-  </figure>
-</div>
+where $\epsilon \sim N(0,1)$. This is implemented in python almost exactly as above (code not shown).
 
 Below is the campanile with noise added to it for various stages
 
@@ -97,19 +90,6 @@ The denoiser does much better than gaussian blur (which makes sense as it was tr
 ## 1.4 Iterative Denoising
 
 Here, we created strided timesteps of the form [900,870,840...,60,30,0], and fed that to the stage1_scheduler. We then implement the iterative denoise function 
-<div class="image-row3a">
-  <figure>
-    <img src="/assets/images/project5/5a/1.3_strided_timesteps.png" alt="0">
-    <figcaption>Figure: Creating strided timesteps</figcaption>
-  </figure>
-</div>
-
-<div class="image-row3a">
-  <figure>
-    <img src="/assets/images/project5/5a/1.3_iterative_denoise.png" alt="0">
-    <figcaption>Figure: Implementing the iterative denoising</figcaption>
-  </figure>
-</div>
 
 whose mathematical equation is
 <div class="image-row3a">
@@ -179,14 +159,7 @@ We can create better looking images by using classifier free guidance to create 
 \begin{equation}
 \epsilon = \epsilon_u + \gamma(\epsilon_c - \epsilon_u)
 \end{equation}
-where $\gamma = 7$. This requires a small update to our function 
-
-<div class="image-row3a">
-  <figure>
-    <img src="/assets/images/project5/5a/1_6_code.png" alt="0">
-    <figcaption>Figure: Implementing classifier-free guidance</figcaption>
-  </figure>
-</div>
+where $\gamma = 7$. This only requires a small update to our function from before.
 
 Below are some samples from denoising standard gaussian noise
 
@@ -432,7 +405,6 @@ Here, we create visual anagrams by creating two noises per iteration: One from t
 Example visual anagrams:
 <div class="image-row3a">
   <figure>
-    <img src="/assets/images/project5/5a/1.8_code1.png" alt="0">
     <img src="/assets/images/project5/5a/1.8_code2.png" alt="0">
     <figcaption>Figure: Important code for implementing the visual anagrams</figcaption>
   </figure>
